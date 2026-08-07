@@ -132,6 +132,9 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
 .hero-sub em{ font-style:normal; border-bottom:2.5px solid var(--sello); padding-bottom:1px; }
 
 .hero-nota{ margin:16px 0 0; max-width:46ch; color:var(--tinta-2); font-size:15.5px; }
+.hero-cv{ margin:20px 0 0; font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; }
+.hero-cv a{ font-weight:700; text-decoration:none; border-bottom:2px solid var(--sello); padding-bottom:3px; }
+.hero-cv a:hover{ color:var(--sello); }
 
 /* sello de goma */
 .sello{
@@ -390,8 +393,11 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
 .contacto h2{ font-size:clamp(38px,7vw,72px); text-transform:uppercase; letter-spacing:-.012em; max-width:15ch; }
 .contacto p{ margin:18px 0 0; max-width:50ch; color:var(--tinta-2); }
 
-.enlaces{ margin:34px 0 0; display:grid; gap:1.5px; background:var(--linea-2); border:1.5px solid var(--linea-2); }
-@media (min-width:700px){ .enlaces{ grid-template-columns:repeat(3,1fr); } }
+.enlaces{
+  margin:34px 0 0; display:grid; gap:1.5px;
+  grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+  background:var(--linea-2); border:1.5px solid var(--linea-2);
+}
 .enlace{
   background:var(--papel); padding:18px 20px 20px;
   text-decoration:none; display:block;
@@ -492,6 +498,9 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
         <b>Freelance ahora<br>Estadía en enero</b>
       </div>
     </div>
+    <p class="hero-cv carga" style="animation-delay:.5s">
+      <a href="docs/Irving-Giovanny-Amador-Hernandez-CV.pdf" target="_blank" rel="noopener">Descargar CV (PDF)</a>
+    </p>
   </header>
 
   <!-- ==========================================================
@@ -894,6 +903,10 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
       <a class="enlace" href="mailto:esmeirving13@gmail.com">
         <span class="campo-label">Correo</span>
         <b>esmeirving13@gmail.com</b>
+      </a>
+      <a class="enlace" href="docs/Irving-Giovanny-Amador-Hernandez-CV.pdf" target="_blank" rel="noopener">
+        <span class="campo-label">Documento</span>
+        <b>Ver mi CV</b>
       </a>
       <!-- TODO: pega el link de tu perfil de Workana cuando salga de revisión -->
       <a class="enlace" href="#" >
