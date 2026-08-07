@@ -274,6 +274,18 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
   box-shadow:0 0 0 1.5px var(--sello);
 }
 
+.control.sec{ padding-top:18px; padding-bottom:0; }
+.control .monto.chico{ font-size:clamp(23px,4.2vw,30px); margin-bottom:10px; }
+.pills{ display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+.pills button{
+  font-family:var(--mono); font-size:13px; font-weight:700;
+  padding:6px 13px 7px; cursor:pointer; border-radius:2px;
+  border:1.5px solid var(--linea-2); background:transparent; color:var(--tinta-2);
+  transition:background .14s ease, color .14s ease, border-color .14s ease;
+}
+.pills button:hover{ border-color:var(--tinta); color:var(--tinta); }
+.pills button.on{ background:var(--sello); border-color:var(--sello); color:var(--papel-2); }
+
 .bloque{ padding:16px; border-top:1px dashed var(--linea-2); font-family:var(--mono); font-size:14.5px; }
 .bloque-tit{ display:flex; gap:9px; align-items:baseline; margin-bottom:9px; }
 .bloque-tit .n{
@@ -283,19 +295,31 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
 }
 .bloque-tit b{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
 
-.destinos{ display:grid; gap:10px; grid-template-columns:1fr; }
-@media (min-width:560px){ .destinos{ grid-template-columns:1fr 1fr; } }
-.destino{ border:1.5px solid; padding:12px 14px 13px; background:rgba(255,255,255,.22); }
-.destino.queda{ border-color:var(--verde); }
+.destino-grande{
+  border:1.5px solid var(--verde); padding:14px 16px 15px;
+  background:rgba(255,255,255,.26);
+}
+.destino-grande .cifra{
+  font-family:var(--display); font-weight:800; color:var(--verde);
+  font-size:clamp(38px,8vw,52px); line-height:1; margin-top:6px;
+  font-variant-numeric:tabular-nums;
+}
+.destino-grande .det{ font-size:11.5px; color:var(--tinta-3); margin-top:7px; line-height:1.45; }
+.destino-grande.perdida{ border-color:var(--sello); }
+.destino-grande.perdida .cifra{ color:var(--sello); }
+.destino-grande.perdida .det{ color:var(--sello); }
+
+.destinos{ display:grid; gap:8px; grid-template-columns:1fr; margin-top:8px; }
+@media (min-width:480px){ .destinos{ grid-template-columns:repeat(3,1fr); } }
+.destino{ border:1.5px solid var(--linea-2); padding:11px 13px 12px; background:rgba(255,255,255,.22); }
 .destino.sat{ border-color:var(--sello); }
 .destino .cifra{
   font-family:var(--display); font-weight:800;
-  font-size:clamp(28px,5.5vw,36px); line-height:1; margin-top:6px;
+  font-size:clamp(22px,4.4vw,27px); line-height:1; margin-top:5px;
   font-variant-numeric:tabular-nums;
 }
-.destino.queda .cifra{ color:var(--verde); }
 .destino.sat .cifra{ color:var(--sello); }
-.destino .det{ font-size:11.5px; color:var(--tinta-3); margin-top:6px; line-height:1.45; }
+.destino .det{ font-size:11px; color:var(--tinta-3); margin-top:5px; line-height:1.4; }
 
 .nota-lat{ margin:11px 0 0; font-size:11.5px; line-height:1.55; color:var(--tinta-3); }
 
@@ -310,6 +334,14 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
   font-size:16.5px;
 }
 .renglon.total dt{ color:var(--tinta); font-weight:700; }
+.renglon.cabeza{
+  font-size:16.5px; padding-bottom:11px; margin-bottom:4px;
+  border-bottom:2px solid var(--tinta);
+}
+.renglon.cabeza dt{ color:var(--tinta); font-weight:700; }
+.renglon.suyo dt{ color:var(--tinta); font-weight:700; }
+.renglon.suyo dd{ color:var(--verde); font-size:16.5px; }
+.renglon.paso dd{ color:var(--sello); }
 .desglose-pie{
   padding:11px 16px 14px; border-top:1px dashed var(--linea-2);
   font-family:var(--mono); font-size:11px; line-height:1.6; color:var(--tinta-3);
@@ -543,58 +575,92 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
 
           <div class="control">
             <label for="monto">Precio del producto (sin IVA)</label>
-            <div class="monto" id="montoTxt">$1,000.00</div>
-            <input type="range" id="monto" min="50" max="20000" step="50" value="1000"
+            <div class="monto" id="montoTxt">$2,500.00</div>
+            <input type="range" id="monto" min="50" max="20000" step="50" value="2500"
                    aria-label="Precio del producto sin IVA en pesos mexicanos">
+          </div>
+
+          <div class="control sec">
+            <label id="lbl-plan">Plan del vendedor</label>
+            <div class="pills" id="planes" role="group" aria-labelledby="lbl-plan">
+              <button type="button" data-tasa="14">14%</button>
+              <button type="button" data-tasa="10">10%</button>
+              <button type="button" data-tasa="8" class="on" aria-pressed="true">8%</button>
+              <button type="button" data-tasa="5">5%</button>
+            </div>
+          </div>
+
+          <div class="control sec">
+            <label for="absorbe">Del envío de $180, el vendedor absorbe</label>
+            <div class="monto chico" id="absorbeTxt">$100.00</div>
+            <input type="range" id="absorbe" min="0" max="180" step="10" value="100"
+                   aria-label="Cuánto del envío absorbe el vendedor, en pesos">
+            <p class="nota-lat" id="restoEnvio">El comprador paga los $80.00 que faltan.</p>
           </div>
 
           <div class="bloque">
             <div class="bloque-tit"><span class="n">1</span><b>Lo que paga el comprador</b></div>
             <div class="renglon">
-              <dt>Producto</dt><span class="puntos"></span><dd id="r-producto">$1,000.00</dd>
+              <dt>Producto</dt><span class="puntos"></span><dd id="r-producto">$2,500.00</dd>
             </div>
             <div class="renglon">
-              <dt>IVA (16%)</dt><span class="puntos"></span><dd id="r-iva">$160.00</dd>
+              <dt>IVA (16%)</dt><span class="puntos"></span><dd id="r-iva">$400.00</dd>
+            </div>
+            <div class="renglon">
+              <dt>Envío (su parte)</dt><span class="puntos"></span><dd id="r-envio-comp">$80.00</dd>
             </div>
             <div class="renglon total">
-              <dt>Total</dt><span class="puntos"></span><dd id="r-total">$1,160.00</dd>
+              <dt>Total</dt><span class="puntos"></span><dd id="r-total">$2,980.00</dd>
             </div>
           </div>
 
           <div class="bloque">
             <div class="bloque-tit"><span class="n">2</span><b>A dónde va ese dinero</b></div>
+            <div class="destino-grande" id="caja-vendedor">
+              <span class="campo-label">Se queda el vendedor</span>
+              <div class="cifra" id="d-vendedor">$2,175.00</div>
+              <div class="det" id="d-vendedor-det">Su producto, menos ISR, comisión y su parte del envío</div>
+            </div>
             <div class="destinos">
-              <div class="destino queda">
-                <span class="campo-label">Se queda el vendedor</span>
-                <div class="cifra" id="d-vendedor">$990.00</div>
-                <div class="det">Su producto, menos el ISR</div>
-              </div>
               <div class="destino sat">
-                <span class="campo-label">Se va al SAT</span>
-                <div class="cifra" id="d-sat">$170.00</div>
-                <div class="det" id="d-sat-det">ISR $10.00 + IVA $160.00</div>
+                <span class="campo-label">Al SAT</span>
+                <div class="cifra" id="d-sat">$425.00</div>
+                <div class="det" id="d-sat-det">ISR + IVA</div>
+              </div>
+              <div class="destino">
+                <span class="campo-label">Paquetería</span>
+                <div class="cifra" id="d-envio">$180.00</div>
+                <div class="det">La guía completa</div>
+              </div>
+              <div class="destino">
+                <span class="campo-label">Plataforma</span>
+                <div class="cifra" id="d-comision">$200.00</div>
+                <div class="det" id="d-comision-det">Comisión del 8%</div>
               </div>
             </div>
             <p class="nota-lat">El IVA completo es del SAT. El vendedor solo lo cobra por él.</p>
           </div>
 
           <div class="bloque">
-            <div class="bloque-tit"><span class="n">3</span><b>Cómo le llega al vendedor</b></div>
-            <div class="renglon">
-              <dt>Se deposita en su cuenta</dt><span class="puntos"></span><dd id="r-deposito">$1,070.00</dd>
+            <div class="bloque-tit"><span class="n">3</span><b>El depósito no es todo suyo</b></div>
+            <div class="renglon cabeza">
+              <dt>Se deposita en su cuenta</dt><span class="puntos"></span><dd id="r-deposito">$880.00</dd>
             </div>
-            <div class="renglon resta">
-              <dt>De eso, IVA que declara él</dt><span class="puntos"></span><dd id="r-porenterar">−$80.00</dd>
+            <div class="renglon suyo">
+              <dt>Suyo de verdad</dt><span class="puntos"></span><dd id="r-neto">$800.00</dd>
             </div>
-            <div class="renglon total">
-              <dt>Suyo de verdad</dt><span class="puntos"></span><dd id="r-neto">$990.00</dd>
+            <div class="renglon paso">
+              <dt>Del SAT, solo de paso</dt><span class="puntos"></span><dd id="r-porenterar">$80.00</dd>
             </div>
-            <p class="nota-lat">Le llega más de lo que cuesta su producto, pero una parte no es suya.</p>
+            <p class="nota-lat">
+              Esos pesos de paso ya están contados arriba, en lo que va al SAT. No se le cobran dos
+              veces: la plataforma ya retuvo la otra mitad del IVA antes de depositar.
+            </p>
           </div>
 
           <p class="desglose-pie">
             Ejemplo ilustrativo con las tasas del régimen de plataformas digitales para vendedores
-            registrados en el RFC. Antes de la comisión de la plataforma, que es configurable.
+            registrados en el RFC. El IVA se calcula sobre el producto; el de envío y comisión va aparte.
           </p>
         </div>
 
@@ -850,14 +916,18 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
   /* ---------- Desglose en vivo ---------- */
   var IVA = 0.16;        // IVA trasladado
   var TASA_ISR = 0.01;   // retención ISR, plataformas digitales, enajenación de bienes
-  var RET_IVA = 0.50;    // se retiene la mitad del IVA trasladado
+  var RET_IVA = 0.50;    // la plataforma retiene la mitad del IVA trasladado
+  var ENVIO = 180;       // costo de la guía cotizado con la paquetería
 
   var pesos = new Intl.NumberFormat("es-MX", {
     style: "currency", currency: "MXN", minimumFractionDigits: 2
   });
 
-  var slider   = document.getElementById("monto");
-  var montoTxt = document.getElementById("montoTxt");
+  var slider  = document.getElementById("monto");
+  var absorbe = document.getElementById("absorbe");
+  var planes  = document.getElementById("planes");
+  var tasaCom = 0.08;    // plan seleccionado por defecto
+
   function poner(id, texto){
     var el = document.getElementById(id);
     if (el) { el.textContent = texto; }
@@ -865,27 +935,63 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
 
   function calcular(){
     var base   = Number(slider.value);
-    var iva    = base * IVA;              // IVA que traslada el vendedor
-    var total  = base + iva;              // lo que paga el comprador
-    var isr    = base * TASA_ISR;         // retención de ISR sobre el ingreso
-    var retIva = iva * RET_IVA;           // la plataforma retiene la mitad del IVA
+    var absVen = Math.min(absorbe ? Number(absorbe.value) : 0, ENVIO); // envío que absorbe el vendedor
+    var absCom = ENVIO - absVen;                                       // envío que se le cobra al comprador
 
-    var deposito   = total - isr - retIva;  // lo que le cae a la cuenta
-    var porEnterar = iva - retIva;          // la otra mitad del IVA: la declara el vendedor
-    var neto       = deposito - porEnterar; // lo que de verdad se queda
-    var alSat      = isr + iva;             // todo el IVA más el ISR terminan en el SAT
+    var iva    = base * IVA;
+    var isr    = base * TASA_ISR;
+    var retIva = iva * RET_IVA;
+    var comis  = base * tasaCom;              // comisión sobre el precio sin IVA
 
-    poner("montoTxt",     pesos.format(base));
-    poner("r-producto",   pesos.format(base));
-    poner("r-iva",        pesos.format(iva));
-    poner("r-total",      pesos.format(total));
-    poner("d-vendedor",   pesos.format(neto));
-    poner("d-sat",        pesos.format(alSat));
-    poner("d-sat-det",    "ISR " + pesos.format(isr) + " + IVA " + pesos.format(iva));
-    poner("r-deposito",   pesos.format(deposito));
-    poner("r-porenterar", "\u2212" + pesos.format(porEnterar));
-    poner("r-neto",       pesos.format(neto));
+    var total      = base + iva + absCom;     // lo que paga el comprador
+    var neto       = base - isr - comis - absVen;  // lo que de verdad se queda el vendedor
+    var alSat      = isr + iva;
+    var porEnterar = iva - retIva;            // el IVA que declara el propio vendedor
+    var deposito   = neto + porEnterar;       // le llega su neto más ese IVA de paso
+
+    poner("montoTxt",       pesos.format(base));
+    poner("absorbeTxt",     pesos.format(absVen));
+    poner("restoEnvio",     absCom > 0
+            ? "El comprador paga los " + pesos.format(absCom) + " que faltan."
+            : "El vendedor absorbe el envío completo.");
+
+    poner("r-producto",     pesos.format(base));
+    poner("r-iva",          pesos.format(iva));
+    poner("r-envio-comp",   pesos.format(absCom));
+    poner("r-total",        pesos.format(total));
+
+    poner("d-vendedor",     pesos.format(neto));
+    poner("d-vendedor-det", neto < 0
+            ? "Pierde dinero: absorbe más envío del que le deja su margen"
+            : "Su producto, menos ISR de " + pesos.format(isr)
+              + ", comisión de " + pesos.format(comis)
+              + " y " + pesos.format(absVen) + " de envío");
+    var caja = document.getElementById("caja-vendedor");
+    if (caja) { caja.classList.toggle("perdida", neto < 0); }
+    poner("d-sat",          pesos.format(alSat));
+    poner("d-sat-det",      "ISR " + pesos.format(isr) + " + IVA " + pesos.format(iva));
+    poner("d-envio",        pesos.format(ENVIO));
+    poner("d-comision",     pesos.format(comis));
+    poner("d-comision-det", "Comisión del " + Math.round(tasaCom * 100) + "%");
+
+    poner("r-deposito",     pesos.format(deposito));
+    poner("r-porenterar",   pesos.format(porEnterar));
+    poner("r-neto",         pesos.format(neto));
   }
+
+  if (planes) {
+    planes.addEventListener("click", function(e){
+      var b = e.target.closest("button[data-tasa]");
+      if (!b) { return; }
+      tasaCom = Number(b.getAttribute("data-tasa")) / 100;
+      Array.prototype.forEach.call(planes.querySelectorAll("button"), function(o){
+        o.classList.toggle("on", o === b);
+        o.setAttribute("aria-pressed", o === b ? "true" : "false");
+      });
+      calcular();
+    });
+  }
+  if (absorbe) { absorbe.addEventListener("input", calcular); }
 
   if (slider) {
     slider.addEventListener("input", calcular);
