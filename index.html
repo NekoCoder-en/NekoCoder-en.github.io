@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Irving Amador Hernández — Desarrollador de software</title>
+<meta name="description" content="Desarrollador de software. Marketplaces con pagos divididos, cumplimiento fiscal SAT y apps móviles en Flutter. Zacualtipán, Hidalgo. Remoto.">
+
+<!-- ============================================================
+     Open Graph — lo que se ve cuando compartes el link
+     TODO: cambia la URL si algún día usas dominio propio
+     ============================================================ -->
+<meta property="og:title" content="Irving Amador Hernández — Desarrollador de software">
+<meta property="og:description" content="Construyo sistemas que mueven dinero y paquetes en México.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nekocoder-en.github.io">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=Courier+Prime:wght@400;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --papel:      #E7E2D4;
+  --papel-2:    #DED7C5;
+  --papel-3:    #D0C7AF;
+  --tinta:      #15140E;
+  --tinta-2:    #55503E;
+  --tinta-3:    #7C7561;
+  --sello:      #7B2D46;
+  --verde:      #1D4C3C;
+  --linea:      rgba(21,20,14,.20);
+  --linea-2:    rgba(21,20,14,.42);
+
+  --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --body:    "Public Sans", system-ui, sans-serif;
+  --mono:    "Courier Prime", ui-monospace, monospace;
+
+  --max: 1060px;
+  --gut: clamp(20px, 5vw, 56px);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--body);
+  font-size: 16.5px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* textura de papel muy sutil, sin imágenes externas */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.5;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(21,20,14,.030) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 15% 0%, rgba(21,20,14,.055), transparent 55%),
+    radial-gradient(ellipse at 90% 100%, rgba(21,20,14,.05), transparent 50%);
+}
+
+.wrap{ position:relative; z-index:1; max-width:var(--max); margin:0 auto; padding:0 var(--gut); }
+
+a{ color:inherit; }
+:focus-visible{ outline:2.5px solid var(--sello); outline-offset:3px; }
+
+/* ============================================================
+   TIPOGRAFÍA BASE
+   ============================================================ */
+h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0; letter-spacing:.005em; }
+
+.campo-label{
+  font-family:var(--mono);
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--tinta-3);
+}
+
+/* ============================================================
+   TIRA SUPERIOR — encabezado de documento
+   ============================================================ */
+.tira{
+  border-bottom:1.5px solid var(--linea-2);
+  background:rgba(21,20,14,.035);
+}
+.tira-in{
+  max-width:var(--max); margin:0 auto; padding:9px var(--gut);
+  display:flex; gap:14px; align-items:center; justify-content:space-between;
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--tinta-2);
+}
+.tira-in span:nth-child(2){ display:none; }
+@media (min-width:700px){ .tira-in span:nth-child(2){ display:inline; } }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{ padding: clamp(46px,8vw,88px) 0 clamp(30px,5vw,44px); }
+
+.hero-top{ display:flex; gap:32px; align-items:flex-start; justify-content:space-between; }
+
+.hero h1{
+  font-size: clamp(58px, 13.5vw, 148px);
+  letter-spacing:-.012em;
+  text-transform:uppercase;
+}
+.hero h1 .ln{ display:block; }
+.hero h1 .ln:nth-child(2){ color:var(--sello); }
+
+.hero-sub{
+  margin:26px 0 0;
+  max-width:31ch;
+  font-size: clamp(19px, 2.5vw, 25px);
+  line-height:1.32;
+  font-weight:500;
+  letter-spacing:-.01em;
+}
+.hero-sub em{ font-style:normal; border-bottom:2.5px solid var(--sello); padding-bottom:1px; }
+
+.hero-nota{ margin:16px 0 0; max-width:46ch; color:var(--tinta-2); font-size:15.5px; }
+
+/* sello de goma */
+.sello{
+  flex:none;
+  border:3px solid var(--sello);
+  color:var(--sello);
+  padding:11px 15px 9px;
+  text-align:center;
+  transform:rotate(-7deg);
+  font-family:var(--mono);
+  font-weight:700;
+  border-radius:3px;
+  opacity:.9;
+  margin-top:8px;
+}
+.sello b{ display:block; font-size:15px; letter-spacing:.1em; line-height:1.15; }
+.sello i{ display:block; font-style:normal; font-size:9.5px; letter-spacing:.16em; margin-top:4px; opacity:.85; }
+@media (max-width:620px){ .sello{ display:none; } }
+
+/* fila de campos tipo formulario */
+.campos{
+  margin-top: clamp(34px,5vw,52px);
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  border:1.5px solid var(--linea-2);
+  background:rgba(255,255,255,.16);
+}
+@media (min-width:820px){ .campos{ grid-template-columns:repeat(4,1fr); } }
+
+.campo{ padding:13px 15px 15px; border-right:1px solid var(--linea); border-bottom:1px solid var(--linea); }
+.campo:nth-child(2n){ border-right:none; }
+@media (min-width:820px){
+  .campo{ border-bottom:none; }
+  .campo:nth-child(2n){ border-right:1px solid var(--linea); }
+  .campo:last-child{ border-right:none; }
+}
+.campo b{ display:block; margin-top:5px; font-family:var(--mono); font-size:14px; font-weight:700; line-height:1.35; }
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+.seccion{ padding: clamp(52px,8vw,96px) 0 0; }
+
+.seccion-cab{
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  border-bottom:1.5px solid var(--linea-2);
+  padding-bottom:9px; margin-bottom:34px;
+}
+.seccion-cab h2{ font-size:clamp(27px,4vw,38px); text-transform:uppercase; }
+.seccion-cab .campo-label{ margin-left:auto; white-space:nowrap; }
+@media (max-width:620px){
+  .seccion-cab .campo-label{ margin-left:0; flex-basis:100%; white-space:normal; }
+}
+
+/* ============================================================
+   COMPROBANTE (tarjeta de proyecto)
+   ============================================================ */
+.comprobante{
+  border:1.5px solid var(--linea-2);
+  background:rgba(255,255,255,.2);
+  margin-bottom:30px;
+  box-shadow: 3px 3px 0 rgba(21,20,14,.09);
+}
+
+.comp-cab{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  padding:9px 16px;
+  border-bottom:1px solid var(--linea-2);
+  background:rgba(21,20,14,.06);
+  font-family:var(--mono); font-size:10.5px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-2);
+}
+.estatus{ margin-left:auto; display:inline-flex; align-items:center; gap:6px; color:var(--verde); }
+.estatus::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--verde); }
+.estatus.gris{ color:var(--tinta-3); }
+.estatus.gris::before{ background:var(--tinta-3); }
+
+.comp-cuerpo{ padding: clamp(22px,3.4vw,34px); }
+
+.comp-cuerpo h3{ font-size:clamp(34px,5.2vw,54px); text-transform:uppercase; letter-spacing:-.01em; }
+.comp-tag{ margin:9px 0 0; font-size:18px; font-weight:600; max-width:44ch; line-height:1.35; letter-spacing:-.005em; }
+.comp-desc{ margin:16px 0 0; max-width:66ch; color:var(--tinta-2); }
+
+/* meta en mono */
+.meta{
+  margin:22px 0 0; padding:13px 0 0;
+  border-top:1px solid var(--linea);
+  display:grid; gap:13px;
+  grid-template-columns:1fr;
+}
+@media (min-width:640px){ .meta{ grid-template-columns:repeat(3,1fr); } }
+.meta div b{ display:block; margin-top:4px; font-family:var(--mono); font-size:13.5px; font-weight:700; line-height:1.4; }
+
+/* lista "lo difícil" */
+.dificil{ margin:26px 0 0; padding:0; list-style:none; }
+.dificil > li{ padding:14px 0; border-top:1px dashed var(--linea-2); display:flex; gap:14px; }
+.dificil > li:last-child{ border-bottom:1px dashed var(--linea-2); }
+.dificil .num{ font-family:var(--mono); font-size:11px; font-weight:700; color:var(--sello); padding-top:4px; flex:none; letter-spacing:.08em; }
+.dificil .txt{ max-width:62ch; }
+.dificil .txt b{ display:block; font-weight:600; font-size:16.5px; }
+.dificil .txt span{ display:block; margin-top:3px; color:var(--tinta-2); font-size:15px; line-height:1.55; }
+
+/* ============================================================
+   DESGLOSE — el elemento firma
+   ============================================================ */
+.desglose{
+  margin:30px 0 0;
+  border:1.5px solid var(--linea-2);
+  background:var(--papel-2);
+}
+.desglose-cab{
+  padding:11px 16px; border-bottom:1px dashed var(--linea-2);
+  display:flex; flex-wrap:wrap; gap:8px; align-items:baseline;
+}
+.desglose-cab strong{ font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+.desglose-cab span{ font-family:var(--mono); font-size:10.5px; color:var(--tinta-3); letter-spacing:.08em; margin-left:auto; }
+
+.control{ padding:17px 16px 5px; }
+.control label{ display:block; font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-3); }
+.control .monto{
+  font-family:var(--display); font-weight:800;
+  font-size:clamp(38px,6.5vw,58px); line-height:1; margin:6px 0 12px;
+  font-variant-numeric:tabular-nums;
+}
+.control input[type=range]{
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:26px; background:transparent; cursor:pointer; display:block;
+}
+.control input[type=range]::-webkit-slider-runnable-track{ height:3px; background:var(--linea-2); }
+.control input[type=range]::-moz-range-track{ height:3px; background:var(--linea-2); }
+.control input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:20px; height:20px; border-radius:50%;
+  background:var(--sello); border:3px solid var(--papel-2);
+  margin-top:-9px; box-shadow:0 0 0 1.5px var(--sello);
+}
+.control input[type=range]::-moz-range-thumb{
+  width:20px; height:20px; border-radius:50%;
+  background:var(--sello); border:3px solid var(--papel-2);
+  box-shadow:0 0 0 1.5px var(--sello);
+}
+
+.bloque{ padding:16px; border-top:1px dashed var(--linea-2); font-family:var(--mono); font-size:14.5px; }
+.bloque-tit{ display:flex; gap:9px; align-items:baseline; margin-bottom:9px; }
+.bloque-tit .n{
+  font-size:10px; font-weight:700; color:var(--papel-2);
+  background:var(--sello); width:17px; height:17px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center; flex:none;
+}
+.bloque-tit b{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+
+.destinos{ display:grid; gap:10px; grid-template-columns:1fr; }
+@media (min-width:560px){ .destinos{ grid-template-columns:1fr 1fr; } }
+.destino{ border:1.5px solid; padding:12px 14px 13px; background:rgba(255,255,255,.22); }
+.destino.queda{ border-color:var(--verde); }
+.destino.sat{ border-color:var(--sello); }
+.destino .cifra{
+  font-family:var(--display); font-weight:800;
+  font-size:clamp(28px,5.5vw,36px); line-height:1; margin-top:6px;
+  font-variant-numeric:tabular-nums;
+}
+.destino.queda .cifra{ color:var(--verde); }
+.destino.sat .cifra{ color:var(--sello); }
+.destino .det{ font-size:11.5px; color:var(--tinta-3); margin-top:6px; line-height:1.45; }
+
+.nota-lat{ margin:11px 0 0; font-size:11.5px; line-height:1.55; color:var(--tinta-3); }
+
+.renglon{ display:flex; align-items:baseline; gap:8px; padding:7px 0; }
+.renglon dt{ color:var(--tinta-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.renglon .puntos{ flex:1; border-bottom:1px dotted var(--linea-2); min-width:14px; transform:translateY(-4px); }
+.renglon dd{ margin:0; font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.renglon.resta dd{ color:var(--sello); }
+.renglon.total{
+  margin-top:5px; padding-top:11px;
+  border-top:2px solid var(--tinta);
+  font-size:16.5px;
+}
+.renglon.total dt{ color:var(--tinta); font-weight:700; }
+.desglose-pie{
+  padding:11px 16px 14px; border-top:1px dashed var(--linea-2);
+  font-family:var(--mono); font-size:11px; line-height:1.6; color:var(--tinta-3);
+}
+
+/* ============================================================
+   ANEXO — hueco para capturas
+   ============================================================ */
+.anexo{ margin:26px 0 0; display:grid; gap:14px; grid-template-columns:1fr; }
+.anexo figure{ margin:0; border:1.5px solid var(--linea-2); background:rgba(255,255,255,.25); }
+.anexo img{ display:block; width:100%; height:auto; border-bottom:1px solid var(--linea-2); }
+.anexo figcaption{
+  padding:9px 13px 11px;
+  font-family:var(--mono); font-size:11px; line-height:1.55;
+  letter-spacing:.05em; color:var(--tinta-3);
+}
+
+/* ============================================================
+   HERRAMIENTAS
+   ============================================================ */
+.grupos{ display:grid; gap:1.5px; background:var(--linea-2); border:1.5px solid var(--linea-2); }
+@media (min-width:760px){ .grupos{ grid-template-columns:repeat(2,1fr); } }
+.grupo{ background:var(--papel); padding:20px 20px 22px; }
+.grupo ul{ margin:11px 0 0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:7px; }
+.grupo li{
+  font-family:var(--mono); font-size:12.5px; font-weight:700;
+  border:1px solid var(--linea-2); padding:4px 9px; border-radius:2px;
+  background:rgba(255,255,255,.28);
+}
+
+/* ============================================================
+   FORMACIÓN
+   ============================================================ */
+.reg{ display:flex; flex-wrap:wrap; gap:6px 18px; padding:17px 0; border-top:1px solid var(--linea); }
+.reg:last-of-type{ border-bottom:1px solid var(--linea); }
+.reg .anio{ font-family:var(--mono); font-size:12.5px; font-weight:700; color:var(--tinta-3); flex:none; width:96px; padding-top:4px; letter-spacing:.06em; }
+.reg .cuerpo{ flex:1 1 260px; }
+.reg .cuerpo b{ display:block; font-size:17px; font-weight:600; }
+.reg .cuerpo span{ display:block; color:var(--tinta-2); font-size:15px; margin-top:2px; }
+
+/* ============================================================
+   CONTACTO
+   ============================================================ */
+.contacto{ margin-top: clamp(56px,9vw,104px); border-top:1.5px solid var(--linea-2); background:rgba(21,20,14,.05); }
+.contacto-in{ max-width:var(--max); margin:0 auto; padding: clamp(44px,7vw,76px) var(--gut) 30px; }
+.contacto h2{ font-size:clamp(38px,7vw,72px); text-transform:uppercase; letter-spacing:-.012em; max-width:15ch; }
+.contacto p{ margin:18px 0 0; max-width:50ch; color:var(--tinta-2); }
+
+.enlaces{ margin:34px 0 0; display:grid; gap:1.5px; background:var(--linea-2); border:1.5px solid var(--linea-2); }
+@media (min-width:700px){ .enlaces{ grid-template-columns:repeat(3,1fr); } }
+.enlace{
+  background:var(--papel); padding:18px 20px 20px;
+  text-decoration:none; display:block;
+  transition:background .16s ease, color .16s ease;
+}
+.enlace b{ display:block; margin-top:6px; font-family:var(--display); font-weight:700; font-size:24px; letter-spacing:.005em; }
+.enlace:hover, .enlace:focus-visible{ background:var(--tinta); color:var(--papel); }
+.enlace:hover .campo-label, .enlace:focus-visible .campo-label{ color:var(--papel-3); }
+
+.pie{
+  max-width:var(--max); margin:0 auto;
+  padding:22px var(--gut) 30px;
+  border-top:1px solid var(--linea);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--tinta-3);
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;
+}
+
+/* ============================================================
+   MOTION
+   ============================================================ */
+.rev{ opacity:0; transform:translateY(18px); transition:opacity .62s ease, transform .62s cubic-bezier(.2,.7,.3,1); }
+.rev.on{ opacity:1; transform:none; }
+
+.carga{ opacity:0; transform:translateY(14px); animation:sube .72s cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes sube{ to{ opacity:1; transform:none; } }
+
+.sello{ opacity:0; animation:estampa .5s cubic-bezier(.3,1.5,.5,1) .62s forwards; }
+@keyframes estampa{
+  0%{ opacity:0; transform:rotate(-16deg) scale(1.5); }
+  100%{ opacity:.9; transform:rotate(-7deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .rev, .carga, .sello{ opacity:1 !important; transform:none !important; animation:none !important; transition:none !important; }
+  .sello{ transform:rotate(-7deg) !important; }
+  *{ scroll-behavior:auto !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TIRA SUPERIOR
+     ============================================================ -->
+<div class="tira">
+  <div class="tira-in">
+    <span>Portafolio</span>
+    <span>Irving Giovanny Amador Hernández</span>
+    <span>Zacualtipán, Hgo. · MX</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ==========================================================
+       HERO
+       ========================================================== -->
+  <header class="hero">
+    <div class="hero-top">
+      <div class="carga" style="animation-delay:.06s">
+        <h1>
+          <span class="ln">Irving</span>
+          <span class="ln">Amador</span>
+          <span class="ln">Hernández</span>
+        </h1>
+      </div>
+      <div class="sello" aria-hidden="true">
+        <b>DISPONIBLE</b>
+        <i>REMOTO · MX</i>
+      </div>
+    </div>
+
+    <p class="hero-sub carga" style="animation-delay:.2s">
+      Construyo sistemas que mueven <em>dinero</em> y <em>paquetes</em> en México.
+    </p>
+
+    <p class="hero-nota carga" style="animation-delay:.3s">
+      Desarrollador de software. Trabajo del backend fiscal a la app móvil:
+      pagos divididos, retenciones del SAT, logística con paqueterías y apps en Flutter.
+    </p>
+
+    <div class="campos carga" style="animation-delay:.4s">
+      <div class="campo">
+        <span class="campo-label">Base</span>
+        <b>Zacualtipán de Ángeles,<br>Hidalgo</b>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Modalidad</span>
+        <b>Remoto</b>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Stack principal</span>
+        <b>Flutter · Node.js</b>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Buscando</span>
+        <b>Freelance ahora<br>Estadía en enero</b>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================
+       PROYECTOS
+       ========================================================== -->
+  <section class="seccion" id="proyectos">
+    <div class="seccion-cab rev">
+      <h2>Proyectos</h2>
+      <span class="campo-label">03 registros</span>
+    </div>
+
+    <!-- ------------------------ VenTÚ ------------------------ -->
+    <article class="comprobante rev">
+      <div class="comp-cab">
+        <span>2026 — en curso</span>
+        <span>·</span>
+        <span>Proyecto propio</span>
+        <span class="estatus">Desplegado · en pruebas</span>
+      </div>
+
+      <div class="comp-cuerpo">
+        <h3>VenTÚ</h3>
+        <p class="comp-tag">Marketplace multivendedor con pagos divididos y cumplimiento fiscal mexicano.</p>
+        <p class="comp-desc">
+          Varias tiendas, un solo carrito. Cada compra se parte por vendedor, cobra con Stripe Connect,
+          retiene lo que marca el régimen de plataformas digitales, cotiza envío con 13 paqueterías
+          y retiene el pago en garantía hasta que el paquete llega. Incluye app móvil, panel de
+          administrador y notificaciones push.
+        </p>
+
+        <div class="meta">
+          <div><span class="campo-label">Rol</span><b>Desarrollo completo<br>(equipo, Scrum)</b></div>
+          <div><span class="campo-label">Stack</span><b>Node.js · Flutter<br>Stripe Connect · Firebase</b></div>
+          <div><span class="campo-label">Estado</span><b>Desplegado en Render<br>fase de pruebas</b></div>
+        </div>
+
+        <ul class="dificil">
+          <li>
+            <span class="num">01</span>
+            <span class="txt">
+              <b>Un carrito, varias tiendas, un pago</b>
+              <span>El carrito genera una orden independiente por tienda, así cada vendedor tiene su
+              propio envío, su propia retención y su propio cobro — pero el comprador paga una sola vez.
+              Las comisiones de Stripe las absorbe la plataforma.</span>
+            </span>
+          </li>
+          <li>
+            <span class="num">02</span>
+            <span class="txt">
+              <b>El dinero no se libera dos veces</b>
+              <span>El pago queda en garantía y se libera 3 días después de entregado. El proceso corre
+              en un CronJob con candado atómico, así que aunque se dispare en paralelo, un vendedor
+              nunca cobra dos veces la misma orden.</span>
+            </span>
+          </li>
+          <li>
+            <span class="num">03</span>
+            <span class="txt">
+              <b>13 paqueterías cotizando al mismo tiempo</b>
+              <span>Integración con Envia.com que consulta a todas las paqueterías en paralelo en vez
+              de una por una. El sistema detecta solo si el pedido va como paquete normal o como flete
+              según peso y dimensiones, y cada vendedor elige sus paqueterías y quién paga el envío.</span>
+            </span>
+          </li>
+          <li>
+            <span class="num">04</span>
+            <span class="txt">
+              <b>Entrar a la web con la huella del celular</b>
+              <span>La app móvil autentica al usuario con huella digital y con eso inicia la sesión en
+              la versión web, sin escribir contraseña.</span>
+            </span>
+          </li>
+        </ul>
+
+        <!-- ============ ELEMENTO FIRMA: DESGLOSE EN VIVO ============ -->
+        <div class="desglose">
+          <div class="desglose-cab">
+            <strong>Desglose de una venta</strong>
+            <span>Mueve el monto</span>
+          </div>
+
+          <div class="control">
+            <label for="monto">Precio del producto (sin IVA)</label>
+            <div class="monto" id="montoTxt">$1,000.00</div>
+            <input type="range" id="monto" min="50" max="20000" step="50" value="1000"
+                   aria-label="Precio del producto sin IVA en pesos mexicanos">
+          </div>
+
+          <div class="bloque">
+            <div class="bloque-tit"><span class="n">1</span><b>Lo que paga el comprador</b></div>
+            <div class="renglon">
+              <dt>Producto</dt><span class="puntos"></span><dd id="r-producto">$1,000.00</dd>
+            </div>
+            <div class="renglon">
+              <dt>IVA (16%)</dt><span class="puntos"></span><dd id="r-iva">$160.00</dd>
+            </div>
+            <div class="renglon total">
+              <dt>Total</dt><span class="puntos"></span><dd id="r-total">$1,160.00</dd>
+            </div>
+          </div>
+
+          <div class="bloque">
+            <div class="bloque-tit"><span class="n">2</span><b>A dónde va ese dinero</b></div>
+            <div class="destinos">
+              <div class="destino queda">
+                <span class="campo-label">Se queda el vendedor</span>
+                <div class="cifra" id="d-vendedor">$990.00</div>
+                <div class="det">Su producto, menos el ISR</div>
+              </div>
+              <div class="destino sat">
+                <span class="campo-label">Se va al SAT</span>
+                <div class="cifra" id="d-sat">$170.00</div>
+                <div class="det" id="d-sat-det">ISR $10.00 + IVA $160.00</div>
+              </div>
+            </div>
+            <p class="nota-lat">El IVA completo es del SAT. El vendedor solo lo cobra por él.</p>
+          </div>
+
+          <div class="bloque">
+            <div class="bloque-tit"><span class="n">3</span><b>Cómo le llega al vendedor</b></div>
+            <div class="renglon">
+              <dt>Se deposita en su cuenta</dt><span class="puntos"></span><dd id="r-deposito">$1,070.00</dd>
+            </div>
+            <div class="renglon resta">
+              <dt>De eso, IVA que declara él</dt><span class="puntos"></span><dd id="r-porenterar">−$80.00</dd>
+            </div>
+            <div class="renglon total">
+              <dt>Suyo de verdad</dt><span class="puntos"></span><dd id="r-neto">$990.00</dd>
+            </div>
+            <p class="nota-lat">Le llega más de lo que cuesta su producto, pero una parte no es suya.</p>
+          </div>
+
+          <p class="desglose-pie">
+            Ejemplo ilustrativo con las tasas del régimen de plataformas digitales para vendedores
+            registrados en el RFC. Antes de la comisión de la plataforma, que es configurable.
+          </p>
+        </div>
+
+        <!-- ============================================================
+             ANEXO — AQUÍ VAN TUS CAPTURAS
+             Cuando tengas las imágenes:
+             1. Súbelas al repo en una carpeta llamada  img/
+             2. Borra el texto de adentro y descomenta la línea de abajo
+             3. Cambia el nombre del archivo
+             ============================================================ -->
+        <div class="anexo">
+          <figure>
+            <img src="img/ventu-producto.png" width="1345" height="890" loading="lazy"
+                 alt="Ficha de producto de VenTÚ: galería, precio, control de cantidad, datos de la tienda vendedora y políticas de devolución.">
+            <figcaption>Ficha de producto — vendedor, existencias y políticas de la tienda. Datos de prueba.</figcaption>
+          </figure>
+          <figure>
+            <img src="img/ventu-admin.png" width="1828" height="450" loading="lazy"
+                 alt="Panel de administrador de VenTÚ mostrando el menú lateral y la tabla de órdenes recientes.">
+            <figcaption>Panel de administrador — tiendas, pagos, finanzas, tickets y bitácora.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- ------------------------ Turno. ------------------------ -->
+    <article class="comprobante rev">
+      <div class="comp-cab">
+        <span>2026</span>
+        <span>·</span>
+        <span>Fundador y único desarrollador</span>
+        <span class="estatus">Google Play · alfa cerrada</span>
+      </div>
+
+      <div class="comp-cuerpo">
+        <h3>Turno.</h3>
+        <p class="comp-tag">Agenda de citas para negocios locales en México.</p>
+        <p class="comp-desc">
+          Un SaaS para que estéticas, consultorios, talleres y restaurantes acepten reservaciones
+          en línea. Lo hice completo yo solo: backend, panel web y app móvil. Publicado en
+          Google Play en alfa cerrada.
+        </p>
+
+        <div class="meta">
+          <div><span class="campo-label">Rol</span><b>Todo el producto<br>(único desarrollador)</b></div>
+          <div><span class="campo-label">Stack</span><b>Node.js · React<br>Flutter · Vercel</b></div>
+          <div><span class="campo-label">Estado</span><b>Alfa cerrada aprobada<br>en Google Play</b></div>
+        </div>
+
+        <ul class="dificil">
+          <li>
+            <span class="num">01</span>
+            <span class="txt">
+              <b>Un formulario que cambia según el giro</b>
+              <span>No es lo mismo agendar corte de pelo que apartar mesa. El perfil del negocio
+              genera campos dinámicos según su categoría, y la lógica de disponibilidad cambia entre
+              reservar por cita y reservar por mesa.</span>
+            </span>
+          </li>
+          <li>
+            <span class="num">02</span>
+            <span class="txt">
+              <b>Las horas siempre mienten</b>
+              <span>Buena parte del trabajo se fue en zonas horarias: que la cita que el negocio ve a
+              las 3 de la tarde sea la misma que el cliente ve a las 3 de la tarde, sin importar cómo
+              esté configurado el dispositivo.</span>
+            </span>
+          </li>
+          <li>
+            <span class="num">03</span>
+            <span class="txt">
+              <b>Reseñas que se moderan solas</b>
+              <span>Sistema de reportes de reseñas: al llegar a tres reportes, la reseña se oculta
+              automáticamente y pasa a revisión, para que un negocio chico no dependa de que alguien
+              esté vigilando.</span>
+            </span>
+          </li>
+        </ul>
+
+        <!-- ANEXO — mismas instrucciones que arriba -->
+        <div class="anexo">
+          <figure>
+            <img src="img/turno-inicio.png" width="1828" height="893" loading="lazy"
+                 alt="Página de inicio de Turno. con buscador de servicio y ubicación, y categorías de negocio.">
+            <figcaption>Inicio — búsqueda por servicio y ubicación, con las categorías de negocio.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- ------------------------ Freppi ------------------------ -->
+    <article class="comprobante rev">
+      <div class="comp-cab">
+        <span>May — Ago 2025</span>
+        <span>·</span>
+        <span>Estadía profesional · Pachuca</span>
+        <span class="estatus gris">Entregado</span>
+      </div>
+
+      <div class="comp-cuerpo">
+        <h3>Freppi</h3>
+        <p class="comp-tag">App de radio en vivo con tienda integrada.</p>
+        <p class="comp-desc">
+          Mi primera estadía profesional. Desarrollé una app móvil en Flutter que reproduce
+          estaciones de radio en streaming y, en la misma app, muestra los productos de la tienda
+          Shopify del cliente.
+        </p>
+
+        <div class="meta">
+          <div><span class="campo-label">Rol</span><b>Desarrollador móvil<br>(estadía)</b></div>
+          <div><span class="campo-label">Stack</span><b>Flutter<br>REST API · Shopify</b></div>
+          <div><span class="campo-label">Estado</span><b>Entregado al cliente</b></div>
+        </div>
+
+        <ul class="dificil">
+          <li>
+            <span class="num">01</span>
+            <span class="txt">
+              <b>Streaming que no se corta</b>
+              <span>Reproducción continua de URLs de radio en vivo, manejando los estados de carga,
+              corte y reconexión que trae cualquier stream real.</span>
+            </span>
+          </li>
+          <li>
+            <span class="num">02</span>
+            <span class="txt">
+              <b>La tienda del cliente, dentro de la app</b>
+              <span>Integré la API de Shopify para traer el catálogo real de la tienda y mostrarlo
+              dentro de la aplicación, sin duplicar el inventario.</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ==========================================================
+       HERRAMIENTAS
+       ========================================================== -->
+  <section class="seccion" id="herramientas">
+    <div class="seccion-cab rev">
+      <h2>Herramientas</h2>
+      <span class="campo-label">Lo que uso a diario</span>
+    </div>
+
+    <div class="grupos rev">
+      <div class="grupo">
+        <span class="campo-label">Móvil</span>
+        <ul>
+          <li>Flutter</li><li>Dart</li><li>React Native</li>
+          <li>Firebase Messaging</li><li>Google Play Console</li>
+        </ul>
+      </div>
+      <div class="grupo">
+        <span class="campo-label">Backend</span>
+        <ul>
+          <li>Node.js</li><li>REST API</li><li>PHP</li>
+          <li>CronJobs</li><li>Render</li><li>firebase-admin</li>
+        </ul>
+      </div>
+      <div class="grupo">
+        <span class="campo-label">Pagos y logística</span>
+        <ul>
+          <li>Stripe Connect</li><li>Envia.com</li>
+          <li>Shopify API</li><li>Retenciones SAT</li><li>CFDI</li>
+        </ul>
+      </div>
+      <div class="grupo">
+        <span class="campo-label">Web y entorno</span>
+        <ul>
+          <li>JavaScript</li><li>React</li><li>HTML5</li><li>CSS3</li>
+          <li>Linux</li><li>Bash</li><li>Git</li><li>Scrum</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       FORMACIÓN
+       ========================================================== -->
+  <section class="seccion" id="formacion">
+    <div class="seccion-cab rev">
+      <h2>Formación</h2>
+      <span class="campo-label">Titulación estimada · 2027</span>
+    </div>
+
+    <div class="rev">
+      <div class="reg">
+        <span class="anio">2023 — 2027</span>
+        <span class="cuerpo">
+          <b>Ingeniería en Tecnologías de la Información</b>
+          <span>Desarrollo y Gestión de Software Multiplataforma · Universidad Tecnológica
+          de la Sierra Hidalguense. Cursando 9.º cuatrimestre.</span>
+        </span>
+      </div>
+      <div class="reg">
+        <span class="anio">2020 — 2023</span>
+        <span class="cuerpo">
+          <b>Bachillerato</b>
+          <span>Vicente Ordóñez Rangel</span>
+        </span>
+      </div>
+      <div class="reg">
+        <span class="anio">Idiomas</span>
+        <span class="cuerpo">
+          <b>Español nativo · Inglés básico</b>
+          <span>Leo documentación técnica en inglés sin problema.</span>
+        </span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     CONTACTO
+     TODO: cambia el correo y agrega tus perfiles de freelance
+     ============================================================ -->
+<footer class="contacto" id="contacto">
+  <div class="contacto-in">
+    <h2 class="rev">Busco un proyecto que valga la pena</h2>
+    <p class="rev">
+      Disponible para freelance ahora mismo y para estadía profesional a partir de enero.
+      Trabajo en remoto desde Hidalgo. Escríbeme y te contesto el mismo día.
+    </p>
+
+    <div class="enlaces rev">
+      <a class="enlace" href="https://github.com/NekoCoder-en" target="_blank" rel="noopener">
+        <span class="campo-label">Código</span>
+        <b>GitHub</b>
+      </a>
+      <a class="enlace" href="mailto:esmeirving13@gmail.com">
+        <span class="campo-label">Correo</span>
+        <b>esmeirving13@gmail.com</b>
+      </a>
+      <!-- TODO: pega el link de tu perfil de Workana cuando salga de revisión -->
+      <a class="enlace" href="#" >
+        <span class="campo-label">Freelance</span>
+        <b>Workana</b>
+      </a>
+    </div>
+  </div>
+
+  <div class="pie">
+    <span>Irving Giovanny Amador Hernández</span>
+    <span>Hecho a mano · 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Desglose en vivo ---------- */
+  var IVA = 0.16;        // IVA trasladado
+  var TASA_ISR = 0.01;   // retención ISR, plataformas digitales, enajenación de bienes
+  var RET_IVA = 0.50;    // se retiene la mitad del IVA trasladado
+
+  var pesos = new Intl.NumberFormat("es-MX", {
+    style: "currency", currency: "MXN", minimumFractionDigits: 2
+  });
+
+  var slider   = document.getElementById("monto");
+  var montoTxt = document.getElementById("montoTxt");
+  function poner(id, texto){
+    var el = document.getElementById(id);
+    if (el) { el.textContent = texto; }
+  }
+
+  function calcular(){
+    var base   = Number(slider.value);
+    var iva    = base * IVA;              // IVA que traslada el vendedor
+    var total  = base + iva;              // lo que paga el comprador
+    var isr    = base * TASA_ISR;         // retención de ISR sobre el ingreso
+    var retIva = iva * RET_IVA;           // la plataforma retiene la mitad del IVA
+
+    var deposito   = total - isr - retIva;  // lo que le cae a la cuenta
+    var porEnterar = iva - retIva;          // la otra mitad del IVA: la declara el vendedor
+    var neto       = deposito - porEnterar; // lo que de verdad se queda
+    var alSat      = isr + iva;             // todo el IVA más el ISR terminan en el SAT
+
+    poner("montoTxt",     pesos.format(base));
+    poner("r-producto",   pesos.format(base));
+    poner("r-iva",        pesos.format(iva));
+    poner("r-total",      pesos.format(total));
+    poner("d-vendedor",   pesos.format(neto));
+    poner("d-sat",        pesos.format(alSat));
+    poner("d-sat-det",    "ISR " + pesos.format(isr) + " + IVA " + pesos.format(iva));
+    poner("r-deposito",   pesos.format(deposito));
+    poner("r-porenterar", "\u2212" + pesos.format(porEnterar));
+    poner("r-neto",       pesos.format(neto));
+  }
+
+  if (slider) {
+    slider.addEventListener("input", calcular);
+    calcular();
+  }
+
+  /* ---------- Revelado al hacer scroll ---------- */
+  var reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var objetivos = document.querySelectorAll(".rev");
+
+  if (reducido || !("IntersectionObserver" in window)) {
+    objetivos.forEach(function(el){ el.classList.add("on"); });
+  } else {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("on"); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+    objetivos.forEach(function(el){ obs.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
