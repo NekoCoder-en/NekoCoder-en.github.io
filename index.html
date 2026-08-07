@@ -132,6 +132,9 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
 .hero-sub em{ font-style:normal; border-bottom:2.5px solid var(--sello); padding-bottom:1px; }
 
 .hero-nota{ margin:16px 0 0; max-width:46ch; color:var(--tinta-2); font-size:15.5px; }
+.hero-cv{ margin:20px 0 0; font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; }
+.hero-cv a{ font-weight:700; text-decoration:none; border-bottom:2px solid var(--sello); padding-bottom:3px; }
+.hero-cv a:hover{ color:var(--sello); }
 
 /* sello de goma */
 .sello{
@@ -390,8 +393,11 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
 .contacto h2{ font-size:clamp(38px,7vw,72px); text-transform:uppercase; letter-spacing:-.012em; max-width:15ch; }
 .contacto p{ margin:18px 0 0; max-width:50ch; color:var(--tinta-2); }
 
-.enlaces{ margin:34px 0 0; display:grid; gap:1.5px; background:var(--linea-2); border:1.5px solid var(--linea-2); }
-@media (min-width:700px){ .enlaces{ grid-template-columns:repeat(3,1fr); } }
+.enlaces{
+  margin:34px 0 0; display:grid; gap:1.5px;
+  grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+  background:var(--linea-2); border:1.5px solid var(--linea-2);
+}
 .enlace{
   background:var(--papel); padding:18px 20px 20px;
   text-decoration:none; display:block;
@@ -492,6 +498,9 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
         <b>Freelance ahora<br>Estadía en enero</b>
       </div>
     </div>
+    <p class="hero-cv carga" style="animation-delay:.5s">
+      <a href="docs/Irving-Giovanny-Amador-Hernandez-CV.pdf" target="_blank" rel="noopener">Descargar CV (PDF)</a>
+    </p>
   </header>
 
   <!-- ==========================================================
@@ -732,6 +741,14 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
           <li>
             <span class="num">03</span>
             <span class="txt">
+              <b>Cobrar mes con mes</b>
+              <span>Suscripciones con Stripe para el plan de cada negocio, y búsqueda de negocios
+              por radio geográfico para que el cliente vea primero lo que tiene cerca.</span>
+            </span>
+          </li>
+          <li>
+            <span class="num">04</span>
+            <span class="txt">
               <b>Reseñas que se moderan solas</b>
               <span>Sistema de reportes de reseñas: al llegar a tres reportes, la reseña se oculta
               automáticamente y pasa a revisión, para que un negocio chico no dependa de que alguien
@@ -817,22 +834,34 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
       <div class="grupo">
         <span class="campo-label">Backend</span>
         <ul>
-          <li>Node.js</li><li>REST API</li><li>PHP</li>
-          <li>CronJobs</li><li>Render</li><li>firebase-admin</li>
+          <li>Node.js</li><li>TypeScript</li><li>REST API</li><li>PHP</li>
+          <li>CronJobs</li><li>Firebase</li><li>Render</li>
+        </ul>
+      </div>
+      <div class="grupo">
+        <span class="campo-label">Bases de datos</span>
+        <ul>
+          <li>MySQL</li><li>PostgreSQL</li><li>SQL</li><li>Modelado de datos</li>
         </ul>
       </div>
       <div class="grupo">
         <span class="campo-label">Pagos y logística</span>
         <ul>
-          <li>Stripe Connect</li><li>Envia.com</li>
+          <li>Stripe Connect</li><li>Suscripciones Stripe</li><li>Envia.com</li>
           <li>Shopify API</li><li>Retenciones SAT</li><li>CFDI</li>
         </ul>
       </div>
       <div class="grupo">
-        <span class="campo-label">Web y entorno</span>
+        <span class="campo-label">Web</span>
         <ul>
           <li>JavaScript</li><li>React</li><li>HTML5</li><li>CSS3</li>
+        </ul>
+      </div>
+      <div class="grupo">
+        <span class="campo-label">Entorno y datos</span>
+        <ul>
           <li>Linux</li><li>Bash</li><li>Git</li><li>Scrum</li>
+          <li>Python</li><li>Scikit-learn</li>
         </ul>
       </div>
     </div>
@@ -853,7 +882,8 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
         <span class="cuerpo">
           <b>Ingeniería en Tecnologías de la Información</b>
           <span>Desarrollo y Gestión de Software Multiplataforma · Universidad Tecnológica
-          de la Sierra Hidalguense. Cursando 9.º cuatrimestre.</span>
+          de la Sierra Hidalguense. Cursando 9.º cuatrimestre. Título de Técnico Superior
+          Universitario en Tecnologías de la Información ya concluido.</span>
         </span>
       </div>
       <div class="reg">
@@ -861,6 +891,14 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
         <span class="cuerpo">
           <b>Bachillerato</b>
           <span>Vicente Ordóñez Rangel</span>
+        </span>
+      </div>
+      <div class="reg">
+        <span class="anio">Académico</span>
+        <span class="cuerpo">
+          <b>Proyectos de escuela</b>
+          <span>Gestor de asistencias con autenticación por huella digital. Modelos de aprendizaje
+          automático en Python con Scikit-learn: árboles de decisión y algoritmos de agrupamiento.</span>
         </span>
       </div>
       <div class="reg">
@@ -894,6 +932,10 @@ h1,h2,h3{ font-family:var(--display); font-weight:800; line-height:.92; margin:0
       <a class="enlace" href="mailto:esmeirving13@gmail.com">
         <span class="campo-label">Correo</span>
         <b>esmeirving13@gmail.com</b>
+      </a>
+      <a class="enlace" href="docs/Irving-Giovanny-Amador-Hernandez-CV.pdf" target="_blank" rel="noopener">
+        <span class="campo-label">Documento</span>
+        <b>Ver mi CV</b>
       </a>
       <!-- TODO: pega el link de tu perfil de Workana cuando salga de revisión -->
       <a class="enlace" href="#" >
